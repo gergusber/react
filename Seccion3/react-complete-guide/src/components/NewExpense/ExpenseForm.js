@@ -58,8 +58,10 @@ const ExpenseForm = (props) => {
         amount: enteredAmount,
         date: new Date(enteredDate)
       };
-    console.log(expenseData);
+    console.log('Expense Form data',expenseData);
 
+    props.onSaveExpenseData(expenseData);
+    
     //override data when its 'saved' 
     setenteredAmount('');
     setenteredDate('');
