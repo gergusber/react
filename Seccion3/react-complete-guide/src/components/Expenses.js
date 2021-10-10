@@ -8,9 +8,8 @@ const Expenses = (props) => {
   const [filterYear, setfilterYear] = useState("2020");
 
   const Filter = (value) => {
-    console.log("Filter", value);
     setfilterYear(value);
-    console.log("FilterFrom state", filterYear);
+    console.log("FilterFrom state", value);
   };
 
   return (
@@ -19,29 +18,14 @@ const Expenses = (props) => {
         <div>
           <ExpensesFilter onSelectNewFilter={Filter} selected={filterYear} />
         </div>
-        {/* {props.expenses.map((n) => {
-        return (
+        {props.expenses.map((item) => (
           <ExpenseItem
-            id={n.id}
-            title={n.title}
-            amount={n.amount}
-            date={n.date}
+            // id={item.id}
+            title={item.title}
+            amount={item.amount}
+            date={item.date}
           />
-        );
-      })} */}
-
-        <ExpenseItem
-          id={props.expenses[0].id}
-          title={props.expenses[0].title}
-          amount={props.expenses[0].amount}
-          date={props.expenses[0].date}
-        />
-        <ExpenseItem
-          id={props.expenses[1].id}
-          title={props.expenses[1].title}
-          amount={props.expenses[1].amount}
-          date={props.expenses[1].date}
-        />
+        ))}
       </Card>
     </div>
   );
