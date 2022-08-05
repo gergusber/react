@@ -4,37 +4,60 @@ import Button from '../../UI/Button/Button';
 import Card from '../../UI/Card/Card';
 
 export const AddUser = (props) => {
-    const [userData, setUserData] = useState({ username: '', age: 0 });
-    const [isValid, setIsValid] = useState(true)
+    const [usernameData, setUsernameData] = useState('');
+    const [ageData, setAgeData] = useState('');
 
-    const usernameInputChangeHandler = event => {
+    const [isValidAge, setIsValidAge] = useState(true)
+    const [isValidUsername, setIsValidUsername] = useState(true)
+
+    const setUsernameDataHandler = event => {
         if (event.target.value.trim().length > 0) {
-            setIsValid(true);
+            setIsValidUsername(true);
+            setUsernameData(event.target.value);
         }
+        setIsValidUsername(false);
 
-        setUserData(event.target.value);
+    };
+
+    const setAgeDataHandler = event => {
+        if (event.target.value.trim().length > 0 && event.target.value > 1) {
+            setIsValidAge(true);
+            setAgeData(event.target.value);
+        }
+        setIsValidAge(false);
     };
 
 
-    const onAddUser = (event) => {
+    const onAddUserHandler = (event) => {
         event.preventDefault();
-        props.onAddGoal(userData);
+        console.log(isValidUsername,isValidAge)
+        if (isValidAge || isValidUsername) {
+            // console.log('Err')
+            return;
+        }
+        console.log({
+            username: usernameData,
+            age: ageData
+        })
+        props.onAddUser({ username: usernameData, age: ageData })
+
+        setUsernameData('')
+        setAgeData('')
     }
 
     return (
         <Card className={styles.input}>
-            <form onSubmit={onAddUser}>
+            <form onSubmit={onAddUserHandler}>
                 <div >
                     <label htmlFor='username'> UserName</label>
-                    <input type="text" id="username" />
+                    <input type="text" id="username" value={usernameData} onChange={setUsernameDataHandler} />
 
                     <label htmlFor='age'> Age</label>
-                    <input type="text" id="age" />
+                    <input type="number" id="age" value={ageData} onChange={setAgeDataHandler} />
                 </div>
-                
-                <Button type="submit" onClick={onAddUser} >Add User</Button>
+
+                <Button type="submit" >Add User</Button>
             </form>
         </Card>
-
     )
 }

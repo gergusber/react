@@ -4,8 +4,7 @@ import styles from "./App.module.css"
 
 function App() {
   const [usersList, setUsersList] = useState([
-    { username: 'gertea', age: 30 },
-    { username: 'gertea2', age: 30 },
+    { username: 'gertea', age: 30 }, 
   ]);
 
   let content = (
@@ -18,12 +17,14 @@ function App() {
       // <CourseGoalList items={usersList} onDeleteItem={deleteItemHandler} />
     );
   }
-
-
+  const onAddUserHandler = (e) => {
+    console.log('Se GUARDA',e)
+  }
+ 
   return (
     <div>
       <section className={styles.AddUsersForm}>
-        <AddUser />
+        <AddUser onAddUser={onAddUserHandler} />
       </section>
       <section id="goals">
         {content}
