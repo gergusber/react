@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AddUser } from "../src/components/Users/userAdd/AddUser";
+import { AddUser } from "./components/Users/userAdd/AddUser";
 import styles from "./App.module.css"
 import { UsersList } from './components/Users/userList/UsersLIst';
 
