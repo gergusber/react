@@ -22,9 +22,9 @@ export const AddUser = (props) => {
     }
 
     return (
-        <Card>
+        <Card className={styles.input}>
             <form onSubmit={onAddUser}>
-                <div className={styles.input}>
+                <div >
                     <label htmlFor='username'> UserName</label>
                     <input type="text" id="username" />
 
@@ -32,7 +32,7 @@ export const AddUser = (props) => {
                     <input type="text" id="age" />
                 </div>
                 
-                <Button type="submit">Add User</Button>
+                <Button type="submit" onClick={onAddUser} >Add User</Button>
             </form>
         </Card>
 
