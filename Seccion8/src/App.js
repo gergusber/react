@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AddUser } from "../src/components/Users/userAdd/AddUser";
+import styles from "./App.module.css"
 
 function App() {
   const [usersList, setUsersList] = useState([
@@ -21,7 +22,7 @@ function App() {
 
   return (
     <div>
-      <section id="goal-form">
+      <section className={styles.AddUsersForm}>
         <AddUser />
       </section>
       <section id="goals">
