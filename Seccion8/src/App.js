@@ -5,8 +5,15 @@ import { UsersList } from './components/Users/userList/UsersLIst';
 
 function App() {
   const [usersListData, setUsersList] = useState([
-    { username: 'gertea', age: 30 , id: Math.random().toString() }, 
+    { username: 'gertea', age: 30, id: Math.random().toString() },
   ]);
+
+  const onDeleteItemHandler = userId => {
+    setUsersList(users => {
+      const updatedUsers = users.filter(user => user.id !== userId);
+      return updatedUsers;
+    });
+  };
 
   let content = (
     <p style={{ textAlign: 'center' }}>No users found. Maybe add one?</p>
@@ -14,25 +21,21 @@ function App() {
 
   if (usersListData.length > 0) {
     content = (
-      
-    <UsersList items={usersListData}  />
-    
+      <UsersList items={usersListData} onDelete={onDeleteItemHandler} />
     );
   }
-  const onAddUserHandler = (e) => {
-    console.log('Se GUARDA',e)
 
+  const onAddUserHandler = (e) => {
     setUsersList(prevUsers => {
       const updatedUsers = [...prevUsers];
       updatedUsers.unshift({ username: e.username, age: e.age, id: Math.random().toString() });
       return updatedUsers;
     });
-    console.log('users:',usersListData)
   }
- 
+
   return (
     <div>
-      <section className={styles.AddUsersForm}>
+      <section className={styles.AddUsersForm} >
         <AddUser onAddUser={onAddUserHandler} />
       </section>
       <section id="goals">

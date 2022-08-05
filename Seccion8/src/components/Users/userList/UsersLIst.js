@@ -11,7 +11,7 @@ export const UsersList = props => {
           <UserListItem
             key={user.id}
             id={user.id}
-            onDelete={props.onDeleteItem}
+            onDelete={props.onDelete}
             user={user}
           >
           </UserListItem>

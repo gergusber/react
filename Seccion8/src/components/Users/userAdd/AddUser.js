@@ -35,10 +35,7 @@ export const AddUser = (props) => {
             // console.log('Err')
             return;
         }
-        console.log({
-            username: usernameData,
-            age: ageData
-        })
+ 
         props.onAddUser({ username: usernameData, age: ageData })
 
         setUsernameData('')
