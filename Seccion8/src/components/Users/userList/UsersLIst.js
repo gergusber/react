@@ -1,22 +1,22 @@
 import React from 'react';
-
-import UserListItem from '../UserListItem/UserListItem';
+import Card from '../../UI/Card/Card';
+import { UserListItem } from '../userItem/UsersLIstItem';
 import styles from './UsersLIst.module.css';
 
-const UsersList = props => {
+export const UsersList = props => {
   return (
-    <ul className={styles.something}>
-      {props.items.map(user => (
-        <UserListItem
-          key={user.id}
-          id={user.UserListItem}
-          onDelete={props.onDeleteItem}
-          user={user}
-        >
-        </UserListItem>
-      ))}
-    </ul>
+    <Card className={styles.users}>
+      <ul >
+        {props.items.map(user => (
+          <UserListItem
+            key={user.id}
+            id={user.id}
+            onDelete={props.onDeleteItem}
+            user={user}
+          >
+          </UserListItem>
+        ))}
+      </ul>
+    </Card>
   );
-};
-
-export default UsersList;
+}; 

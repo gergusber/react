@@ -1,19 +1,18 @@
 
 import React from 'react';
-import styles from './UserListItem.module.css';
+import styles from './UsersLIstItem.module.css';
 
-const UserListItem = props => {
+export const UserListItem = props => {
 
   const deleteHandler = () => {
      props.onDelete(props.id);
   };
 
   return (
-    <li className={styles.UserList} onClick={deleteHandler}>
-      Username:{props.user.username}
+    <li className={styles.item} onClick={deleteHandler}>
+      Username:{props.user.username} <br />
       age:{props.user.age}
     </li>
   );
 };
-
-export default UserListItem;
+ 
