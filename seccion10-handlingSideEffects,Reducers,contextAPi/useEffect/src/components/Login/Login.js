@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -13,11 +13,23 @@ const Login = (props) => {
 
 
   useEffect(() => {
-    setFormIsValid(
-      enteredEmail.includes('@') && enteredPassword.trim().length > 6
-    );
+    const identifier = setTimeout(() => {
+      console.log('Check Validity')
+
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      );
+    }, 500);
+
+
+
+    return () => {
+      console.log('clean up')
+      clearTimeout(identifier);
+
+    }
   }, [enteredEmail, enteredPassword])
-  
+
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
   };
@@ -43,9 +55,8 @@ const Login = (props) => {
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
         <div
-          className={`${classes.control} ${
-            emailIsValid === false ? classes.invalid : ''
-          }`}
+          className={`${classes.control} ${emailIsValid === false ? classes.invalid : ''
+            }`}
         >
           <label htmlFor="email">E-Mail</label>
           <input
@@ -57,9 +68,8 @@ const Login = (props) => {
           />
         </div>
         <div
-          className={`${classes.control} ${
-            passwordIsValid === false ? classes.invalid : ''
-          }`}
+          className={`${classes.control} ${passwordIsValid === false ? classes.invalid : ''
+            }`}
         >
           <label htmlFor="password">Password</label>
           <input
