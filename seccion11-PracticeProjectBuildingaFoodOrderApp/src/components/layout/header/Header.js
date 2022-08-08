@@ -1,19 +1,19 @@
 import { Fragment } from 'react';
 import mealsImage from '../../../assets/meals.jpg'
-
+import clases from './Header.module.css'
 
 const Header = (props) => {
     return (
-        <>
-            <header>
+        <Fragment>
+            <header className={clases.header}>
                 <h1>
                     React Meals
                 </h1>
             </header>
-            <div>
-                <img src={mealsImage} />
+            <div className={clases['main-image']} >
+                <img src={mealsImage} alt='something' />
             </div>
-        </>
+        </Fragment>
     )
 }
 
