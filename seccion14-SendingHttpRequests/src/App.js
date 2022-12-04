@@ -5,25 +5,10 @@ import './App.css';
 
 function App() {
   const [movies, setMovies] = useState([])
-  // const fetchMoviesHandler = () => {
-  //   fetch('https://swapi.py4e.com/api/films')
-  //     .then(response => { return response.json() })
-  //     .then(
-  //       (res) => {
-  //         const data = res.results.map(x => {
-  //           return {
-  //             id: x.episode_id,
-  //             title: x.title,
-  //             openingText: x.opening_crawl,
-  //             releaseDate: x.release_date
-  //           }
-  //         })
-  //         setMovies(data)
-  //       }
-  //     )
-  // }
-  // async await version
+  const [isLoading, setIsLoading] = useState(false)
+
   const fetchMoviesHandler = async () => {
+    setIsLoading(true)
     const response = await fetch('https://swapi.py4e.com/api/films');
     const data = await response.json()
     const transformedMovies = data.results.map(x => {
@@ -35,6 +20,7 @@ function App() {
       }
     })
     setMovies(transformedMovies)
+    setIsLoading(false)
   }
 
   // useEffect(() => {
@@ -48,7 +34,9 @@ function App() {
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
       <section>
-        <MoviesList movies={movies} />
+        {!isLoading && <MoviesList movies={movies} />}
+        {!isLoading && movies.length === 0 && <p>Found not movies.</p>}
+        {isLoading && <p>Loading...</p>}
       </section>
     </React.Fragment>
   );
