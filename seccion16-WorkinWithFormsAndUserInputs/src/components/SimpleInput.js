@@ -1,16 +1,23 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState('');
   const nameInputRef = useRef();
-  const [enteredNameValid, setEnteredNameValid] = useState(true)
+  const [enteredNameValid, setEnteredNameValid] = useState(false);
+  const [enteredNameTouched, setEnteredNameTouched] = useState(false)
 
   const nameInputChangedHandler = event => {
     setEnteredName(event.target.value)
   }
 
+  useEffect(() => {
+    if (enteredNameValid)
+      console.log('name input is valid')
+  }, [enteredNameValid])
+
   const formSubmissionHandler = event => {
     event.preventDefault();
+    setEnteredNameTouched(true)
     if (enteredName.trim() === '') {
       setEnteredNameValid(false)
       return
@@ -23,7 +30,10 @@ const SimpleInput = (props) => {
     setEnteredName('')
   }
   //we assign classes for invalid css conditionally
-  const nameInputClasses = enteredNameValid ? 'form-control' : 'form-control invalid';
+
+  const nameInputIsInvalid = !enteredNameValid && enteredNameTouched
+
+  const nameInputClasses = nameInputIsInvalid ? 'form-control invalid' : 'form-control';
 
   return (
     < form onSubmit={formSubmissionHandler}>
@@ -34,7 +44,7 @@ const SimpleInput = (props) => {
           ref={nameInputRef}
           onChange={nameInputChangedHandler}
           value={enteredName} />
-        {!enteredNameValid && <p className="error-text">Name must not be empty.</p>}
+        {nameInputIsInvalid && <p className="error-text">Name must not be empty.</p>}
       </div>
       <div className="form-actions">
         <button>Submit</button>
