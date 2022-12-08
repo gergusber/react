@@ -6,21 +6,22 @@ import useHttp from './hooks/use-http'
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  const applyDataHandler = useCallback((data) => {
-    const loadedTasks = [];
-    for (const taskKey in data) {
-      loadedTasks.push({ id: taskKey, text: data[taskKey].text });
-    }
-    setTasks(loadedTasks);
-  })
 
-  const { isLoading, error, sendRequest } = useHttp(applyDataHandler);
+  const { isLoading, error, sendRequest } = useHttp();
 
 
   useEffect(() => {
+    const applyDataHandler = (data) => {
+      const loadedTasks = [];
+      for (const taskKey in data) {
+        loadedTasks.push({ id: taskKey, text: data[taskKey].text });
+      }
+      setTasks(loadedTasks);
+    }
+
     sendRequest({
-      url: 'https://react-http-6b4a6.firebaseio.com/tasks.json'
-    });
+      url: 'https://react-http-6b4a6.firebaseio.com/tasks.json'//url to firebase
+    }, applyDataHandler);
   }, []);
 
   const taskAddHandler = (task) => {
