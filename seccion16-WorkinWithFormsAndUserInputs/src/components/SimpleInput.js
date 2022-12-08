@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState('');
   const [enteredNameTouched, setEnteredNameTouched] = useState(false)
-
   const enteredNameValid = enteredName.trim() !== '' && enteredNameTouched
   const nameInputIsInvalid = !enteredNameValid && enteredNameTouched
 
@@ -19,14 +18,19 @@ const SimpleInput = (props) => {
     event.preventDefault();
     setEnteredNameTouched(true)
     if (!enteredNameValid) {
-       return
+      return
     }
- 
+
     console.log('enteredName state', enteredName)
 
     setEnteredName('')
     setEnteredNameTouched(false)
   }
+  let formIsValid = false
+  if (enteredNameValid)
+    formIsValid = true
+
+
 
   //we assign classes for invalid css conditionally
   const nameInputClasses = nameInputIsInvalid ? 'form-control invalid' : 'form-control';
@@ -43,7 +47,7 @@ const SimpleInput = (props) => {
         {nameInputIsInvalid && <p className="error-text">Name must not be empty.</p>}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );
