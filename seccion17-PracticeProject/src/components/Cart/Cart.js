@@ -46,6 +46,16 @@ const Cart = (props) => {
     {hasItems && <button className={classes.button} onClick={orderHandler} >Order</button>}
   </div>);
 
+  const submitOrderHandler = (userData) => {
+    fetch('https://test-.europe-west1.firebasedatabase.app/orders.json',{
+      method:'POST',
+      body: JSON.stringify({
+        user: userData,
+        orderedItems: cartCtx.items
+      })
+    })
+  }
+ 
   return (
     <Modal onClose={props.onClose}>
       {cartItems}
@@ -53,7 +63,7 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && <Checkout onCancel={props.onClose} />}
+      {isCheckout && <Checkout onCancel={props.onClose} onSubmit={submitOrderHandler}/>}
 
       {!isCheckout && modalActions}
     </Modal>
