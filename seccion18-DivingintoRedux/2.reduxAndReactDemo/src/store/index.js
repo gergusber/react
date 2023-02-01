@@ -1,15 +1,6 @@
-// const redux = require('redux');
-// import classes from './Counter.module.css';
-// import {createStore} from 'reud';
-// import { createStore } from 'redux'
+
 import { createSlice, configureStore } from '@reduxjs/toolkit';
 
-const actions = {
-  INCREMENT: 'increment',
-  DECREMENT: 'decrement',
-  INCREASE: 'increase',
-  TOGGLE: 'toggle'
-}
 
 const initialState = { counter: 0, showCounter: true }
 
@@ -33,16 +24,15 @@ const counterSlicer = createSlice({
 })
 
 
-
-
 const store = configureStore({
   reducer: counterSlicer.reducer,
   //for multiple reducers
   // reducer:{
   //   counter: counterSlicer.reducer
   // }
-  
+
 });
 
-export const counterActions = counterSlicer.actions;
+export const counterActions = counterSlicer.actions;// export the actions of the slicer 
+
 export default store;
