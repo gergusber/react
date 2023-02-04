@@ -43,7 +43,7 @@ export const fetchCartData = (cart) => {
   return async (dispatch) => {
     const sendRequest = async () => {
       const response = await fetch('url from firebase')
-      
+
       if (!response.ok) {
         throw new Error('Could not fetch cart data')
       }
@@ -53,7 +53,10 @@ export const fetchCartData = (cart) => {
 
     try {
       const cartData = await sendRequest();
-      dispatch(cartActions.replaceCart(cartData))
+      dispatch(cartActions.replaceCart({
+        items: cartData.items || [],
+        totalQuantity: cartData.totalQuantity
+      }))
     } catch (error) {
       dispatch(uiActions.showNOtification({
         status: 'error',
