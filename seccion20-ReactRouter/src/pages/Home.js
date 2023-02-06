@@ -1,5 +1,10 @@
+import { Link } from 'react-router-dom'
+
 const Homepage = () => {
-  return <div>Home page!</div>
+  return <>
+    <h1>Home page!</h1>
+    <p> goTo <Link to="/products">Products page </Link></p>
+  </>
 };
 
 export default Homepage
