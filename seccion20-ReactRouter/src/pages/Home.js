@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const Homepage = () => {
   return <>
-    <h1>Home page!</h1>
+    <h2>Home page!</h2>
     <p> goTo <Link to="/products">Products page </Link></p>
   </>
 };
