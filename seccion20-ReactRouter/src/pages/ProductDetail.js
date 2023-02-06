@@ -1,5 +1,5 @@
 
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 const PRODUCTS = [
   { id: 'p1', title: 'product 1' },
@@ -11,6 +11,8 @@ const ProductDetail = () => {
   const product = PRODUCTS.find(x => x.id === param.productId);
   return <>
     <h2>Product Detail page! product id: { product.id}, title: {product.title}</h2>
+    <p>  <Link to="..">back </Link></p>
+
   </>
 };
 
