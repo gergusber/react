@@ -14,7 +14,7 @@ function MainNavigation() {
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
-              end
+              end //only consider it active only if the route ends in /
             >
               Home
             </NavLink>
