@@ -4,7 +4,6 @@ const Homepage = () => {
 
   const navigate = useNavigate();
 
-
   const navigateHandler = () => {
     navigate('/products')// navigate programatically
   }
