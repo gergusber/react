@@ -5,6 +5,7 @@ import EventsNavigation from '../components/EventsNavigation';
 const EventsLayout = () => {
   return <>
     <EventsNavigation />
+    
     <Outlet />
   </>
 };

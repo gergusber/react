@@ -8,7 +8,7 @@ import EventsPage from './pages/EventsPage'
 import EventDetailPage from './pages/EventDetailPage'
 import EditEventPage from './pages/EditEventPage'
 import NewEventPage from './pages/NewEventPage'
-import EventsNavigation from './components/EventsNavigation';
+import EventsLayout from './pages/EventsRoot';
 import ErrorPage from "./pages/Error";
 // Challenge / Exercise
 
@@ -42,9 +42,23 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       {
         path: 'events',
-        element: <EventsNavigation />,
+        element: <EventsLayout />,
         children: [
-          { index: true, element: <EventsPage /> },
+          {
+            index: true,
+            element: <EventsPage />,
+            loader: async () => {
+              const response = await fetch('http://localhost:8080/events');
+
+              if (!response.ok) {
+                // setError('Fetching events failed.');
+              } else {
+                const resData = await response.json();
+                // setFetchedEvents(resData.events);
+                return resData.events;
+              }
+            }
+          },
           { path: 'new', element: <NewEventPage /> },
           { path: ':eventId', element: <EventDetailPage /> },
           { path: ':eventId/edit', element: <EditEventPage /> }
