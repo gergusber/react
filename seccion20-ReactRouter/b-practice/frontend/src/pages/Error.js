@@ -1,7 +1,3 @@
-import { Link } from 'react-router-dom'
-import {
-  Outlet
-} from 'react-router-dom'
 import MainNavigation from '../components/MainNavigation';
 import classes from './Error.module.css';
 
