@@ -1,14 +1,29 @@
 import EventsList from '../components/EventsList'
 import { useLoaderData } from 'react-router-dom'
 
-
 const EventsPage = () => {
-  const events = useLoaderData()
-  console.log( ' holis ')
+  const data = useLoaderData()
+  const { events } = data;
+
   return <>
-    <h2>Event page!</h2>
     <EventsList events={events} />
   </>
 };
 
-export default EventsPage
+export default EventsPage;
+
+
+export async function loader() {
+  const response = await fetch('http://localhost:8080/events');
+
+  if (!response.ok) { 
+    return { isError: true, message: 'Could not fetch events' }
+  } else {
+    // const resData = await response.json();
+    // setFetchedEvents(resData.events);
+    // const res = new Response('data', {
+    //   status: 201
+    // })
+    return response;
+  }
+} 
