@@ -1,5 +1,5 @@
 import classes from './EventItem.module.css';
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 function EventItem({ event }) {
