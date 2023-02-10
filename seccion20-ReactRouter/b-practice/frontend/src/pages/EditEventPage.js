@@ -6,7 +6,7 @@ const EditEventPage = () => {
   const data = useRouteLoaderData('event-detail')
 
   return <>
-      <EventForm method={'edit'} event={data.event} />
+    <EventForm method={'patch'} event={data.event} />
   </>
 };
 

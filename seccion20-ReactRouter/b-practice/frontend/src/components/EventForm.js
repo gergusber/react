@@ -1,8 +1,9 @@
-import { Form, useNavigate, useNavigation } from 'react-router-dom';
+import { Form, useNavigate, useNavigation, useActionData, json, redirect } from 'react-router-dom';
 
 import classes from './EventForm.module.css';
 
 function EventForm({ method, event }) {
+  const data = useActionData();
   const navigate = useNavigate();
   const navigation = useNavigation(); // current state of the currently active transition.
 
@@ -12,8 +13,10 @@ function EventForm({ method, event }) {
     navigate('..');
   }
 
+
   return (
-    <Form method='post' className={classes.form}>
+    <Form method={method} className={classes.form}>
+      {/* */}
       <p>
         <label htmlFor="title">Title</label>
         <input id="title" type="text" name="title" required defaultValue={event ? event.title : null} />
@@ -41,3 +44,41 @@ function EventForm({ method, event }) {
 }
 
 export default EventForm;
+
+
+export async function action({ request, params }) {
+  const { method } = request;
+  const data = await request.formData();
+
+  const eventData = {
+    title: data.get('title'),
+    image: data.get('image'),
+    date: data.get('date'),
+    description: data.get('description'),
+  }
+
+  let url = 'http://localhost:8080/events'
+
+  if(method === 'PATCH')
+  {
+    const { eventId } = params
+    url =  'http://localhost:8080/events/' + eventId
+  }
+
+  const response = await fetch(url, {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(eventData)
+  });
+  if (response.status === 422) {
+    return response;
+  }
+  if (!response.ok) {
+    return json({ message: 'Could not fetch events' },
+      { status: 500 })
+  } else {
+    return redirect('/events');
+  }
+}
