@@ -1,32 +1,65 @@
 import EventItem from '../components/EventItem'
-import { json, useRouteLoaderData, redirect } from "react-router-dom";
+import EventList from '../components/EventsList'
+import { Suspense } from 'react';
+import { json, useRouteLoaderData, redirect, defer, Await } from "react-router-dom";
 
 const EventDetailPage = () => {
-  const data = useRouteLoaderData('event-detail')
+  const { event, events } = useRouteLoaderData('event-detail')
 
-  return <EventItem event={data.event} />
+  return <>
+    <Suspense fallback={<p style={{ textAlign: 'center' }} >Loading...</p>}>
+      <Await resolve={event}>
+        {(loadedEvent) => <EventItem event={loadedEvent} />}
+      </Await>
+    </Suspense>
+    <Suspense fallback={<p style={{ textAlign: 'center' }} >Loading...</p>}>
+      <Await resolve={events}>
+        {(loadedEvents) => <EventList events={loadedEvents} />}
+      </Await>
+    </Suspense>
+  </>
 };
 
 export default EventDetailPage
 
-export async function loader({ request, params }) {
-  console.log('params.eventId', params.eventId)
 
-  const response = await fetch('http://localhost:8080/events/' + params.eventId);
+const loadEvents = async () => {
+  const response = await fetch('http://localhost:8080/events');
+
+  if (!response.ok) {
+    return json({ message: 'Could not fetch events' },
+      { status: 500 })
+  } else {
+    const resData = await response.json();
+    return resData.events;
+  }
+}
+
+const loadEvent = async (id) => {
+  const response = await fetch('http://localhost:8080/events/' + id);
   console.log('response', response)
 
   if (!response.ok) {
     return json({ message: 'Could not fetch details for selected event.' },
       { status: 500 })
   } else {
-    return response;
+    const resData = await response.json();
+    return resData.event;
   }
-} 
+}
+
+export async function loader({ request, params }) {
+  const { eventId } = params
+  return defer({
+    events: loadEvents(),
+    event: loadEvent(eventId)
+  })
+}
 
 export async function action({ request, params }) {
   const { eventId } = params;
 
-  const response = await fetch('http://localhost:8080/events/' + eventId,{
+  const response = await fetch('http://localhost:8080/events/' + eventId, {
     method: request.method// we extract the method from the  startDeleteHandler of the event Item
   });
 
