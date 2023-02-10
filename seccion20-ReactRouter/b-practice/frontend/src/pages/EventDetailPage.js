@@ -52,7 +52,7 @@ export async function loader({ request, params }) {
   const { eventId } = params
   return defer({
     events: loadEvents(),
-    event: loadEvent(eventId)
+    event: await loadEvent(eventId) // wait for the event and load the page without loading the events, .
   })
 }
 
