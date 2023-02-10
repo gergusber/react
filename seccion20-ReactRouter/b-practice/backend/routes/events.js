@@ -57,6 +57,11 @@ router.post('/', async (req, res, next) => {
 
   try {
     await add(data);
+    //add a timeout just to give the time to use the submitting of useNavigation
+    // setTimeout(() => {
+    //   res.status(201).json({ message: 'Event saved.', event: data });
+    // }, 1500);
+
     res.status(201).json({ message: 'Event saved.', event: data });
   } catch (error) {
     next(error);
