@@ -16,3 +16,7 @@ se utiliza un hook para obtener el valor del parametro que es el useRouter de ne
     const router = useRouter(); // llamamos al hook
   const { query } = router;  // extraemos query params del router
   return <h1>The DetailPage {query.newsId}</h1>  // obtenemos el nombre del parametro definido en la ruta(http://localhost:3000/news/something-important)
+
+  Link component from next/link uses load the component and change the url but its not create a refresh of th page and we want a pwa.
+
+  
