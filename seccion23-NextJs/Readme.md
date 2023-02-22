@@ -19,4 +19,16 @@ se utiliza un hook para obtener el valor del parametro que es el useRouter de ne
 
   Link component from next/link uses load the component and change the url but its not create a refresh of th page and we want a pwa.
 
-  
+
+next js has static rendering:
+
+export const getStaticProps = async () => {
+//usages:
+// fetch data from api when you want from data
+  return {
+    props:{   //returns the props object that will be consumed from the component
+      meetups: DUMMY_MEETUPS
+    },
+    revalidate: 10 //this unlocks the incremental static generation. gives a number of seconds where nextjs will re generate the page. ( data not be more than 10 sec old.)
+  }
+}
