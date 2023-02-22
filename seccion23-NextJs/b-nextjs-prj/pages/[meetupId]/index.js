@@ -2,12 +2,19 @@ import { useRouter } from 'next/router'
 import MeetupDetail from "../../components/meetups/MeetUpDetail";
 import { MongoClient, ObjectId, ServerApiVersion } from 'mongodb';
 const uri = "mongodb+srv://<user>:<password>@<cluster>.4ryh4fh.mongodb.net/meetups?retryWrites=true&w=majority";
+import Head from 'next/head'
 
 const DetailMeetupPage = (props) => {
-  return <MeetupDetail id={props.meetup.id}
-    title={props.meetup.title}
-    image={props.meetup.image}
-    address={props.meetup.address} />
+  return <>
+    <Head>
+      <title> Meetup {props.meetup.title} </title>
+      <meta name='description' content={props.meetup.description} />
+    </Head>
+    <MeetupDetail id={props.meetup.id}
+      title={props.meetup.title}
+      image={props.meetup.image}
+      address={props.meetup.address} />
+  </>
 }
 
 
@@ -29,7 +36,6 @@ export const getStaticPaths = async () => {
     paths: meetups.map(m => ({ params: { meetupId: m._id.toString() } }))
   }
 }
-
 
 export const getStaticProps = async (context) => {
   const { meetupId } = context.params;

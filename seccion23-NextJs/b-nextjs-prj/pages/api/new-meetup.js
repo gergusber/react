@@ -17,11 +17,6 @@ const handler = async (req, res) => {
 
     res.status(201).json({ message: 'meetup Inserted' })
   }
-
-
-  if (req.method === 'GET') {
-
-  }
 }
 
 export default handler

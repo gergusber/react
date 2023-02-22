@@ -2,9 +2,16 @@
 import MeetupList from "../components/meetups/MeetupList";
 import { MongoClient, ServerApiVersion } from 'mongodb';
 const uri = "mongodb+srv://<user>:<password>@<cluster>.4ryh4fh.mongodb.net/meetups?retryWrites=true&w=majority";
+import Head from 'next/head'
 
 const HomePage = (props) => {
-  return <MeetupList meetups={props.meetups} />
+  return <>
+    <Head>
+      <title> React meetups </title>
+      <meta name='description' content='Browse a huge list of highly active React meetups!' />
+    </Head>
+    <MeetupList meetups={props.meetups} />
+  </>
 };
 
 export const getStaticProps = async () => {
@@ -36,7 +43,6 @@ export const getStaticProps = async () => {
 
 
 // export const getServerSideProps = async (context) => {
-
 //   const { req, res } = context;
 //   // console.log('reqquest : ', req)
 //   // console.log('response : ', res)
