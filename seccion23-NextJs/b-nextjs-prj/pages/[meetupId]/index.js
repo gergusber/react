@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import MeetupDetail from "../../components/meetups/MeetUpDetail";
 import { MongoClient, ObjectId, ServerApiVersion } from 'mongodb';
 const uri = "mongodb+srv://<user>:<password>@<cluster>.4ryh4fh.mongodb.net/meetups?retryWrites=true&w=majority";
@@ -21,15 +20,9 @@ const DetailMeetupPage = (props) => {
 export const getStaticPaths = async () => {
   const client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
   const db = client.db();
-
   const meetupsCollections = db.collection('meetups');
   const meetups = await meetupsCollections.find({}, { _id: 1 }).toArray();
-
-  console.log(meetups);
-
   client.close();
-
-
 
   return {
     fallback: false,  // false means that are all paths generated, but true, means that you have some of the paths 
