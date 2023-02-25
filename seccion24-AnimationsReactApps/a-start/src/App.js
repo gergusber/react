@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import Transition from 'react-transition-group/Transition'
 import "./App.css";
 import Modal from "./components/Modal/Modal";
 import Backdrop from "./components/Backdrop/Backdrop";
@@ -24,19 +24,33 @@ class App extends Component {
       <div className="App">
         <h1>React Animations</h1>
 
-        <button className="Button"  onClick={() => {
+        <button className="Button" onClick={() => {
           this.setState((prevState) => ({ showBloc: !prevState.showBloc }))
         }}>Toggle</button>
         <br />
         <br />
 
-        {this.state.showBloc ? <div style={{
-          backgroundColor: 'red ',
-          width: 100,
-          height: 100,
-          margin: 'auto'
-        }}> </div> : null}
-        <br/>
+        {/* {this.state.showBloc ?  */}
+        <Transition 
+        in={this.state.showBloc} 
+        timeout={1000}
+        mountOnEnter
+        unmountOnExit>
+          {/*{state => <p>{state}</p>}  this transition provide a state with different states that heelps you to work on different stages of the render the component  */}
+          {state =>
+            <div style={{
+              backgroundColor: 'red ',
+              width: 100,
+              height: 100,
+              margin: 'auto',
+              transition: 'opacity 1s ease-out',
+              opacity: state === 'exited' ? 0 : 1 
+            }}> </div>
+
+          }
+          {/* : null} */}
+        </Transition>
+        <br />
 
 
         {this.state.modalIsOpen ? <Modal show={this.state.modalIsOpen} closed={this.closeModal} /> : null}
