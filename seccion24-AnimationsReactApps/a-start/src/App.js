@@ -31,11 +31,11 @@ class App extends Component {
         <br />
 
         {/* {this.state.showBloc ?  */}
-        <Transition 
-        in={this.state.showBloc} 
-        timeout={1000}
-        mountOnEnter
-        unmountOnExit>
+        <Transition
+          in={this.state.showBloc}
+          timeout={1000}
+          mountOnEnter
+          unmountOnExit>
           {/*{state => <p>{state}</p>}  this transition provide a state with different states that heelps you to work on different stages of the render the component  */}
           {state =>
             <div style={{
@@ -44,7 +44,7 @@ class App extends Component {
               height: 100,
               margin: 'auto',
               transition: 'opacity 1s ease-out',
-              opacity: state === 'exited' ? 0 : 1 
+              opacity: state === 'exited' ? 0 : 1
             }}> </div>
 
           }
@@ -52,9 +52,20 @@ class App extends Component {
         </Transition>
         <br />
 
+        <Transition
+          in={this.state.modalIsOpen}
+          timeout={300}
+          mountOnEnter
+          unmountOnExit
+        >
+          {state => (
+            <Modal show={state} closed={this.closeModal} />
+          )}
 
-        {this.state.modalIsOpen ? <Modal show={this.state.modalIsOpen} closed={this.closeModal} /> : null}
-        {this.state.modalIsOpen ? <Backdrop show={this.state.modalIsOpen} /> : null}
+        </Transition>
+
+
+        {this.state.modalIsOpen ? <Backdrop show /> : null}
         <button className="Button" onClick={this.showModal}>Open Modal</button>
         <h3>Animating Lists</h3>
         <List />
