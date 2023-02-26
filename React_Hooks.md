@@ -194,6 +194,108 @@ function Example() {
 
 ------------------------------------
 
+- useCallback : 
+ hook is a built-in hook in React that is used to optimize performance by memoizing a function reference so that it doesn't have to be re-created on every render. When a function is created inside a component, it is created again every time the component is re-rendered. This can lead to unnecessary re-renders of child components that receive that function as a prop.
+
+The useCallback hook takes two arguments: a callback function and an array of dependencies. It returns a memoized version of the callback function. The memoized function will only be re-created if one of the dependencies has changed.
+
+
+```
+import React, { useCallback } from 'react';
+
+function Example(props) {
+  const handleClick = useCallback(() => {
+    props.onButtonClick();
+  }, [props.onButtonClick]);
+
+  return (
+    <div>
+      <button onClick={handleClick}>
+        Click me
+      </button>
+    </div>
+  );
+}
+
+```
+
+>In this example, we define a handleClick function using useCallback. We pass props.onButtonClick as a dependency in the dependency array. This means that the handleClick function will only be re-created if the props.onButtonClick reference changes.
+>
+>We attach the handleClick function to a button element using the onClick attribute. When the button is clicked, the handleClick function is called, which calls the props.onButtonClick function that was passed down from a parent component. By using useCallback, we ensure that the handleClick function reference doesn't change unnecessarily, which can help optimize performance.
+
+------------------------------------
+- useMemo: The useMemo hook is a built-in hook in React that is used to memoize a value that is expensive to compute. When a value is computed inside a component, it is computed again every time the component is re-rendered. This can lead to unnecessary re-computation of the value, which can be a performance bottleneck.
+
+The useMemo hook takes two arguments: a function that computes the value, and an array of dependencies. It returns a memoized version of the value. The memoized value will only be re-computed if one of the dependencies has changed.
+
+
+```
+import React, { useMemo } from 'react';
+
+function Example(props) {
+  const expensiveValue = useMemo(() => {
+    // Some expensive computation
+    return props.data.reduce((acc, value) => acc + value, 0);
+  }, [props.data]);
+
+  return (
+    <div>
+      <p>The expensive value is: {expensiveValue}</p>
+    </div>
+  );
+}
+
+```
+
+> In this example, we define an expensiveValue using useMemo. We pass a function that computes the value as the first argument, and props.data as a dependency in the dependency array. This means that the expensiveValue will only be re-computed if the props.data dependency changes.
+>
+> We display the expensiveValue on the page inside a paragraph element. By using useMemo, we ensure that the expensiveValue is only re-computed when necessary, which can help optimize performance. Without useMemo, the value would be computed on every re-render of the component, even if props.data hadn't changed.
+
+------------------------------------
+
+- Custom hooks:  are reusable functions in React that encapsulate complex logic and provide a simple interface for other components to use. They allow you to share functionality across multiple components without repeating code, and can help improve the organization and maintainability of your code.
+
+Custom hooks are created by following the same rules as standard hooks in React, which means they can also use other hooks such as useState, useEffect, and useContext. The naming convention for custom hooks is to prefix the name with use, which indicates to React that it is a hook.
+
+
+
+```
+import { useState, useEffect } from 'react';
+
+function useFetchData(url) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(url);
+        const json = await response.json();
+        setData(json);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error };
+}
+
+```
+> In this example, we define a custom hook called useFetchData. The hook takes a url as an argument and returns an object with three properties: data, loading, and error. The useFetchData hook uses useState and useEffect to handle fetching data from the provided URL, and returns the data as an object with the three properties.
+> 
+> Other components can use this custom hook to fetch data by calling it with a URL as an argument. This helps to avoid duplicating the same code for fetching data in multiple components, and makes it easier to manage the state of the fetched data.
+
+
+------------------------------------
+
+
+
 react-router-dom:
 
 - useEffect
